@@ -1,11 +1,13 @@
+import "../app/globals.css";
+
 import getRepo from "../api/getRepo";
 import getRepoCommits from "../api/getRepoCommits";
+import CommitCard from "@/components/CommitCard";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function Post() {
-    const [loading, setLoading] = useState(true);
     const [repoData, setRepoData] = useState(null);
     const [repoCommits, setRepoCommits] = useState(null);
 
@@ -14,19 +16,21 @@ export default function Post() {
     // const pathname = usePathname();
 
     const getFirstPage = useEffect(() => {
-        getRepo(router.query.fullname).then((result) => {
-            setLoading(false);
-            setRepoData(result);
-        });
-        getRepoCommits(router.query.fullname).then((result) => {
-            setLoading(false);
-            setRepoCommits(result);
-            console.log(repoCommits);
-        });
+        if (repoData === null && router.query.fullname !== undefined)
+            getRepo(router.query.fullname).then((result) => {
+                setRepoData(result);
+            });
+        if (repoCommits === null && router.query.fullname !== undefined)
+            getRepoCommits(router.query.fullname).then((result) => {
+                setRepoCommits(result);
+                console.log(typeof result);
+                console.log(result);
+            });
     }, [router]);
 
     return (
-        <div>
+        <div className="page-container">
+            <h1>Commits</h1>
             {repoData === null || repoCommits === null ? (
                 <div>Loading</div>
             ) : (
@@ -46,17 +50,16 @@ export default function Post() {
                         <meta key="twittertitle" property="twitter:title" content={repoData.name} />
                         <meta key="twitterdescription" property="twitter:description" content={repoData.description} />
                     </Head>
-                    <div>
-                        {repoData.name}
-                        {repoData.description}
-                        {/* {repoCommits.map((item) => (
-                            <div key={item.sha}>
-                                <div>{item.sha}</div>
-                                <div>{item.commit.author}</div>
-                                <div>{item.commit.message}</div>
-                                <div>Created {item.sha}</div>
-                            </div>
-                        ))} */}
+                    <div className="commits-container">
+                        {repoCommits.map((item) => (
+                            <CommitCard
+                                key={item.sha}
+                                message={item.commit.message}
+                                commit={item.sha}
+                                author={item.commit.author.name}
+                                date={item.commit.author.date}
+                            />
+                        ))}
                     </div>
                 </div>
             )}

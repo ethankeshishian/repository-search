@@ -22,7 +22,8 @@ export default function RepoSearch() {
     }, []);
 
     return (
-        <div>
+        <div className="page-container">
+            <h1>Repositories</h1>
             {repoData === null ? (
                 <div>Loading</div>
             ) : (

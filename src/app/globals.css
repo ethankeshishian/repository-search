@@ -10,6 +10,7 @@
     --gap-px: 16px;
     --padding-px: 16px;
     --small-padding-px: 8px;
+    --main-heading-px: 32px;
     --mini-heading-px: 24px;
     --main-background-rgb: 255, 255, 255;
     --overlay-background-rgb: 225, 225, 225;
@@ -24,21 +25,28 @@
 }
 
 body {
-    color: rgb(var(--foreground-rgb));
     background-color: rgb(var(--main-background-rgb));
 }
 
 /* Mine */
-.cards-container {
+h1 {
+    font-size: var(--main-heading-px);
+}
+
+.page-container {
     padding: var(--padding-px);
+}
+
+.cards-container,
+.commits-container {
     display: flex;
     flex-direction: column;
     gap: var(--gap-px);
-    outline: black solid 1px;
     background-color: rgb(var(--main-background-rgb));
 }
 
-.card-container {
+.card-container,
+.commit-details-container {
     padding: var(--small-padding-px);
     outline: black solid 1px;
     border-radius: 4px;
@@ -64,7 +72,8 @@ body {
     justify-content: space-between;
 }
 
-.repo-card-date {
+.repo-card-date,
+.commit-details-date {
     font-style: italic;
 }
 
@@ -72,6 +81,7 @@ body {
     font-style: italic;
 }
 
-.repo-card-name {
+.repo-card-name,
+.commit-details-message {
     font-size: var(--mini-heading-px);
 }
