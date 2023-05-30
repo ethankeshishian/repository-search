@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import RepoCard from "./RepoCard";
 import Search from "./Search";
 import getRepos from "@/api/getRepos";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 
 export default function RepoSearch() {
     const default_params = {
@@ -30,7 +29,7 @@ export default function RepoSearch() {
                 <div>
                     {/* <Search /> */}
                     <div className="cards-container">
-                        {repoData.items.map((repo: any) => (
+                        {repoData.items?.map((repo) => (
                             <RepoCard
                                 key={repo.id}
                                 name={repo.name}
